@@ -35,9 +35,13 @@ document.getElementById("useProfileButton").addEventListener("click", ()=>{
     }
 })
 
-
+MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
+    writeLog("init_getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
+}, (getContextError)=>{
+    writeLog("init_getContextError_user_profile" + JSON.stringify(getContextError))
+});
 document.getElementById("useMessengerButton").addEventListener("click", ()=>{
-    if(mySupportedFeatures.includes("context") && mySupportedFeatures.length === 1) {
+    if(mySupportedFeatures.include("context") && mySupportedFeatures.length === 1) {
         MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
             writeLog("getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
         }, (getContextError)=>{
