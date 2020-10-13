@@ -21,6 +21,6 @@ window.extAsyncInit = function () {
         // }, ["user_profile", "user_messaging"])
         // }
     }, function error(error) {
-        document.write("error21:" + JSON.stringify(error));
+        document.write("supportedFeaturesError:" + JSON.stringify(error));
     });
 };
