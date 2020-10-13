@@ -11,7 +11,7 @@ function writeLog(log) {
     SupportedFeatures["sharing_media_template"] = "sharing_media_template";
 })(SupportedFeatures || (SupportedFeatures = {}));
 window.extAsyncInit = function () {
-    MessengerExtensions.askPermission(function success(supportedFeatures) {
+    MessengerExtensions.getSupportedFeatures(function success(supportedFeatures) {
         writeLog("supportedFeaturesSuccess:"+JSON.stringify(supportedFeatures));
         MessengerExtensions.askPermission((permission)=>{
             writeLog("askPermissionSuccess:" + JSON.stringify(permission));
@@ -24,7 +24,7 @@ window.extAsyncInit = function () {
             }
         }, (permissionError)=>{
             writeLog("askPermissionError:" + JSON.stringify(permissionError));
-        }, ["user_profile", "user_messaging"]);
+        }, "user_profile");
     }, function error(error) {
         writeLog("supportedFeaturesError:" + JSON.stringify(error));
     });
