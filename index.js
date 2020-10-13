@@ -14,7 +14,8 @@ window.extAsyncInit = function () {
 
 
 document.getElementById("useProfileButton").addEventListener("click", ()=>{
-    if(mySupportedFeatures.include(context) && mySupportedFeatures.length === 1) {
+    console.log(mySupportedFeatures, "mySupportedFeatures")
+    if(mySupportedFeatures.include("context") && mySupportedFeatures.length === 1) {
         MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
             writeLog("getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
         }, (getContextError)=>{
@@ -36,7 +37,7 @@ document.getElementById("useProfileButton").addEventListener("click", ()=>{
 
 
 document.getElementById("useMessengerButton").addEventListener("click", ()=>{
-    if(mySupportedFeatures.include(context) && mySupportedFeatures.length === 1) {
+    if(mySupportedFeatures.include("context") && mySupportedFeatures.length === 1) {
         MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
             writeLog("getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
         }, (getContextError)=>{
