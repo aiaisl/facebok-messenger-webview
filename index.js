@@ -1,4 +1,8 @@
 var SupportedFeatures;
+function writeLog(log) {
+    console.log(`${document.body.innerText}<br>${log}`);
+    document.write(`${document.body.innerText}<br>${log}`);
+}
 (function (SupportedFeatures) {
     SupportedFeatures["context"] = "context";
     SupportedFeatures["sharing_broadcast"] = "sharing_broadcast";
@@ -8,19 +12,20 @@ var SupportedFeatures;
 })(SupportedFeatures || (SupportedFeatures = {}));
 window.extAsyncInit = function () {
     MessengerExtensions.askPermission(function success(supportedFeatures) {
-        document.write(JSON.stringify(supportedFeatures), "supportedFeatures");
-        // if(supportedFeatures.supported_features.includes(SupportedFeatures.context)) {
-        // MessengerExtensions.getContext("418557695509853", (result)=>{
-        //     console.log(result, "context")
-        // }, ()=>{
-        // });
-        // MessengerExtensions.askPermission((result)=>{
-        //     console.log(result, "askPermission")
-        // }, (result)=>{
-        //     console.log(result, "askPermission Error")
-        // }, ["user_profile", "user_messaging"])
-        // }
+        writeLog("supportedFeaturesSuccess:"+JSON.stringify(supportedFeatures));
+        MessengerExtensions.askPermission((permission)=>{
+            writeLog("askPermissionSuccess:" + JSON.stringify(permission));
+            if(supportedFeatures.supported_features.includes(SupportedFeatures.context)) {
+                MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
+                    console.log("getContextSuccess" + JSON.stringify(getContextSuccess))
+                }, (getContextError)=>{
+                    console.log("getContextError" + JSON.stringify(getContextError))
+                });
+            }
+        }, (permissionError)=>{
+            writeLog("askPermissionError:" + JSON.stringify(permissionError));
+        }, ["user_profile", "user_messaging"]);
     }, function error(error) {
-        document.write("supportedFeaturesError:" + JSON.stringify(error));
+        writeLog("supportedFeaturesError:" + JSON.stringify(error));
     });
 };
