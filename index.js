@@ -37,7 +37,7 @@ document.getElementById("useProfileButton").addEventListener("click", ()=>{
 
 
 document.getElementById("useMessengerButton").addEventListener("click", ()=>{
-    if(mySupportedFeatures.include("context") && mySupportedFeatures.length === 1) {
+    if(mySupportedFeatures.includes("context") && mySupportedFeatures.length === 1) {
         MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
             writeLog("getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
         }, (getContextError)=>{
