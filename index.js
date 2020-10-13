@@ -22,14 +22,26 @@ window.extAsyncInit = function () {
 document.getElementById("useProfileButton").addEventListener("click", ()=>{
     MessengerExtensions.askPermission((permission)=>{
         writeLog("askPermissionSuccess:" + JSON.stringify(permission));
-        if(supportedFeatures.supported_features.includes(SupportedFeatures.context)) {
-            MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
-                console.log("getContextSuccess" + JSON.stringify(getContextSuccess))
-            }, (getContextError)=>{
-                console.log("getContextError" + JSON.stringify(getContextError))
-            });
-        }
+        MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
+            writeLog("getContextSuccess_user_profile" + JSON.stringify(getContextSuccess))
+        }, (getContextError)=>{
+            writeLog("getContextError_user_profile" + JSON.stringify(getContextError))
+        });
     }, (permissionError)=>{
         writeLog("askPermissionError:" + JSON.stringify(permissionError));
     }, "user_profile");
+})
+
+
+document.getElementById("useMessengerButton").addEventListener("click", ()=>{
+    MessengerExtensions.askPermission((permission)=>{
+        writeLog("askPermissionSuccess:" + JSON.stringify(permission));
+        MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
+            writeLog("getContextSuccess_user_messaging" + JSON.stringify(getContextSuccess))
+        }, (getContextError)=>{
+            writeLog("getContextError_user_messaging" + JSON.stringify(getContextError))
+        });
+    }, (permissionError)=>{
+        writeLog("askPermissionError:" + JSON.stringify(permissionError));
+    }, "user_messaging");
 })
