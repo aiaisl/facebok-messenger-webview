@@ -1,7 +1,7 @@
 var SupportedFeatures;
 function writeLog(log) {
     console.log(`${document.body.innerText}<br>${log}`);
-    document.write(`${document.body.innerText}<br>${log}`);
+    document.body.querySelector("#log").append(`<br>${log}`);
 }
 (function (SupportedFeatures) {
     SupportedFeatures["context"] = "context";
@@ -13,19 +13,23 @@ function writeLog(log) {
 window.extAsyncInit = function () {
     MessengerExtensions.getSupportedFeatures(function success(supportedFeatures) {
         writeLog("supportedFeaturesSuccess:"+JSON.stringify(supportedFeatures));
-        MessengerExtensions.askPermission((permission)=>{
-            writeLog("askPermissionSuccess:" + JSON.stringify(permission));
-            if(supportedFeatures.supported_features.includes(SupportedFeatures.context)) {
-                MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
-                    console.log("getContextSuccess" + JSON.stringify(getContextSuccess))
-                }, (getContextError)=>{
-                    console.log("getContextError" + JSON.stringify(getContextError))
-                });
-            }
-        }, (permissionError)=>{
-            writeLog("askPermissionError:" + JSON.stringify(permissionError));
-        }, "user_profile");
     }, function error(error) {
         writeLog("supportedFeaturesError:" + JSON.stringify(error));
     });
 };
+
+
+document.getElementById("useProfileButton").addEventListener("click", ()=>{
+    MessengerExtensions.askPermission((permission)=>{
+        writeLog("askPermissionSuccess:" + JSON.stringify(permission));
+        if(supportedFeatures.supported_features.includes(SupportedFeatures.context)) {
+            MessengerExtensions.getContext("418557695509853", (getContextSuccess)=>{
+                console.log("getContextSuccess" + JSON.stringify(getContextSuccess))
+            }, (getContextError)=>{
+                console.log("getContextError" + JSON.stringify(getContextError))
+            });
+        }
+    }, (permissionError)=>{
+        writeLog("askPermissionError:" + JSON.stringify(permissionError));
+    }, "user_profile");
+})
